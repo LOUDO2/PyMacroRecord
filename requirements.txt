@@ -1,4 +1,4 @@
-pillow==12.3.0
+pillow==13.0.0
 pynput==1.8.2
 requests==2.34.2
 pystray==0.19.5
