@@ -1,8 +1,8 @@
-from sys import argv
 from tkinter import DISABLED, BooleanVar, Menu
 from webbrowser import open as OpenUrl
 
 from utils.record_file_management import RecordFileManagement
+from utils.startup_record import get_startup_record_path
 from windows.help.about import About
 from windows.options.playback import Delay, Repeat, Speed, TimeGui
 from windows.options.settings import AfterPlayBack, Hotkeys, SelectLanguage
@@ -24,13 +24,13 @@ class MenuBar(Menu):
         self.file_menu = Menu(my_menu, tearoff=0)
         my_menu.add_cascade(label=self.text_config["file_menu"]["file_text"], menu=self.file_menu)
         record_file_management = RecordFileManagement(parent, self)
-        if len(argv) > 1:
+        if get_startup_record_path():
             self.file_menu.add_command(label=self.text_config["file_menu"]["new_text"], accelerator="Ctrl+N", command=record_file_management.new_macro)
         else:
             self.file_menu.add_command(label=self.text_config["file_menu"]["new_text"], state=DISABLED, accelerator="Ctrl+N")
         self.file_menu.add_command(label=self.text_config["file_menu"]["load_text"], accelerator="Ctrl+L", command=record_file_management.load_macro)
         self.file_menu.add_separator()
-        if len(argv) > 1:
+        if get_startup_record_path():
             self.file_menu.add_command(label=self.text_config["file_menu"]["save_text"], accelerator="Ctrl+S", command=record_file_management.save_macro)
             self.file_menu.add_command(label=self.text_config["file_menu"]["save_as_text"], accelerator="Ctrl+Shift+S", command=record_file_management.save_macro_as)
         else:

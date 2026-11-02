@@ -1,9 +1,8 @@
 import copy
 import json
-import sys
 from json import load
 from os import path
-from sys import argv, platform
+from sys import platform
 from threading import Thread
 from time import time
 from tkinter import (
@@ -27,6 +26,7 @@ from hotkeys.hotkeys_manager import HotkeysManager
 from macro import Macro
 from utils.get_file import resource_path
 from utils.record_file_management import RecordFileManagement
+from utils.startup_record import get_startup_record_path
 from utils.user_settings import UserSettings
 from utils.version import Version
 from utils.warning_pop_up_save import confirm_save
@@ -84,8 +84,9 @@ class MainApp(Window):
         self.center_frame.pack(expand=True, fill=BOTH)
 
         # Import record if opened with .pmr extension
-        if len(argv) > 1:
-            with open(sys.argv[1], 'r') as record:
+        startup_record = get_startup_record_path()
+        if startup_record:
+            with open(startup_record, 'r') as record:
                 loaded_content = load(record)
             self.macro.import_record(loaded_content)
             self.playBtn = Button(self.center_frame, image=self.playImg, command=self.macro.start_playback)
